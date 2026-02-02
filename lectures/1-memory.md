@@ -9,7 +9,7 @@ Application developers behave as if:
 
 > Why do program developers behave as if main memory is unlimited and unshared?
 
-Compared to the early days of computing, available memory is huge. Early systems (ie: Commodore 64; 64 KB of memory) had very limited memory. In these times, developers had to think about and use memory very efficiently. 
+Compared to the early days of computing, available memory is huge. Early systems (ie: Commodore 64; 64 KB of memory) had very limited memory. In these times, developers had to think about and use memory very efficiently.
 
 This is why languages like C and Java support types like `short`. In modern times, will anyone notice if we waste 1000 integers?
 
@@ -165,10 +165,30 @@ The cost of this effort is that every memory access now includes an addition ope
 
 ## Swapping
 
-Processes must be in main memory to run. Given enough demanding processes, it will not be possible to keep them all in memory at once. 
+Processes must be in main memory to run. Given enough demanding processes, it will not be possible to keep them all in memory at once.
 
 **Swapping** comes in handy when we have blocked processes taking up space that we want to replace with ready-to-run processes, so we can move them from memory to disk (or vice-versa).
 
 The downside is that swapping is painful. We have to write the entirety of the process from memory to the disk, or vice-versa, which of course becomes costly as memory usage increases.
 
 When we swap processes, it does not have to go back to the same place in memory. We just need to update the relocation register.
+
+## Dynamic Memory Allocation
+
+In Java, the `new` keyword is used to create a new instance of an object. The runtime will garbage collect the object later on.
+
+In C++, `new` and `delete` are used to allocate and deallocate objects respectively.
+
+In C, memory allocation is done on a lower level with `malloc()` and `free()`.
+
+For example, to allocate an integer, you call `malloc(sizeof(int))`. This creates a new integer in memory and returns its address, which can be stored in a pointer.
+
+When `free()` is called on a pointer, the memory it occupied is marked as available, but might not be cleared or reused immediately after.
+
+## Fulfilling Memory Requests
+
+Note that `free()` does not specify how much memory is returned. This means that (a) the OS keeps track of each allocated block's size and (b) it is not possible to return part of a block.
+
+The operating system will try to find some free memory to meet a request.
+
+Although running out of memory in modern computers is a rare occurence, there is the possibility that some request may not be fulfilled because no block meeting the need of the request is available.

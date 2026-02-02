@@ -4,15 +4,15 @@ The goal of caching is to speed up operations; it takes less time to fetch data 
 
 Caches are useful anytime a large resource is divided into pieces, some of which are used more often than others.
 
-Consider a CPU generating memory addresses for read/write operations. 
+Consider a CPU generating memory addresses for read/write operations.
 
 The address will be mapped to a page. If the page is in the cache, it is a *cache hit*. If it is not in th ecache, it is a *miss*, in which case the page must be loaded from memory. A page miss is also called a *page fault*. The percentage of time that a page is found in the cache is the *hit ratio*. The effective access time can be computed as:
 
-$\text{Effective Access Time} = h \times t_c \times (1 - h) \times t_m$
+$\text{Effective Access Time} = h \times t_c + (1 - h) \times t_m$
 
 Where $h$ is the hit ratio, $t_c$ is the time required to load a page from the cache, and $t_m$ is the time to load a page from memory.
 
-Caches for memory are often multileveled, which changes the effective access time formula. 
+Caches for memory are often multileveled, which changes the effective access time formula.
 
 ## Page Replacement Algorithms
 
@@ -20,7 +20,7 @@ When a page fault occurs, the OS needs to choose which page to evict from the ca
 
 ### Optimal
 
-* Replace the page that will be most distantly used in the future. 
+* Replace the page that will be most distantly used in the future.
 * For each page, make a determination about how many instructions in the future that page will be accessed. The one with the highest value is selected.
 * This is a **benchmark**, the algorithm itself is impossible to implement.
 
@@ -44,7 +44,7 @@ When a page fault occurs, the OS needs to choose which page to evict from the ca
 ### Clock Algorithm
 
 * Improvement on FIFO.
-* Give pages a "second chance" depending on the $R$ bit. 
+* Give pages a "second chance" depending on the $R$ bit.
 * If the oldest page hasn't been recently referenced, it is removed.
 * If it has been recently referenced, the bit is cleared.
 * Go to the next oldest page and repeat, until a page is removed.
@@ -63,9 +63,9 @@ When a page fault occurs, the OS needs to choose which page to evict from the ca
 * When the $R$ bit would've been updated to 1, the counter is incremented.
 * When a page must be replaced, the page with the lowest counter value is replaced.
 * Problem: counters never decrease.
-    * A page that may have been accessed frequently at the start of a program will have a high counter value, and may never be evicted despite not being accessed again.
+  * A page that may have been accessed frequently at the start of a program will have a high counter value, and may never be evicted despite not being accessed again.
 * Solution: *aging*.
-    * Counters are shifted to the right by 1 bit before they are incremented, and instead of actually incrementing, the leftmost bit is set to 1.
+  * Counters are shifted to the right by 1 bit before they are incremented, and instead of actually incrementing, the leftmost bit is set to 1.
 
 ## Choosing an algorithm
 
@@ -83,7 +83,7 @@ It is important to consider how multiple processes affect page replacement algor
 
 For example, when a process switch occurs, we could dump the contents of the cache for the next process, but this is often unnecessary work.
 
-For the page replacement algorithms, it is important to consider whether it should care about which process a page belongs to. 
+For the page replacement algorithms, it is important to consider whether it should care about which process a page belongs to.
 
 Suppose we use LRU. If a process has a page fault, do we replace the least recently used page in all caches (global), or just in the cache that belongs to the process (local)?
 
