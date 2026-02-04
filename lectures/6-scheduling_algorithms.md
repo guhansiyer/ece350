@@ -54,3 +54,32 @@ A simple scheduling algorithm would be to always pick the highest priority, non-
         * If there is one, the available process will be ran, displacing the currently running process.
     * There is a chance, just like the last algorithm. If we choose $S_1$ to be 0 for a new process, they will always displace the current process.
     * One advantage is we no longer need time slicing. Instead of interrupting the process every $t$ units of time, the other interrupts (user programs launching, hardware operations, etc.) will be what prompts the scheduler, which is a net performance increase.
+
+7. Highest Response Ratio Next
+    * Introduce normalized turnaround time: the ratio fo the turnaround time to the service time.
+    * The goal of the HRRN stratey is to minimize the normalized turnaround time average across all processes.
+    * We calculate the response ration $R = \frac{w+s}{s}$, where $w$ is the waiting time and $s$ is the service time (a guess).
+    * When we need to select a new process to run, we pick the process with the highest $R$-value.
+    * Jobs with a small $s$ are likely to get scheduled quickly.
+    * HRRN introduces something we have not had yet: factoring in a process's age. $w$ indicates how long a process has spent waiting.
+    * A process that has spent a long time waiting will rise in priority over time until it eventually runs.
+    * HRRN thus has no starvation, because all processes will have a high enough $R$ over time.
+    * The major problem here is that we need a way to estimate $s$.
+
+8. Multilevel Queue (Feedback)
+    * We have treated processes more or less equally (excluding priority) thus far.
+    * While fair, it is not always ideal, especially for situations where processes behave differently (user/kernel programs).
+    * We could apply different algorithms to different process types.
+    * The multilevel queue takes the ready queue and splits it into several queues. A process can only be in one of the queues base on some attribute of the process. One queue could be scheduled by round robin, and another by first come, first served, for example.
+    * We also need a way of choosing which queue to take from. This depends on our goals. We might dictate that some queues have absolute priority over others, or we might have time slicing between the queues.
+
+9. Guaranteed Scheduling
+    * The idea is to promise the users something and fulfill that promise.
+    * For example, if we have $n$ processes, we could promise that each gets an equal share ($1/n$) of the CPU time.
+    * The system, in this case, must track how much CPU time each process has received, and consider how this compares to the ideal (time since creation over $n$).
+    * If a process has a value of 0.5, it has had only half the CPU it "should" have received.
+    * The goal is to run the process with the lowest score, to try to keep all values as close to 1.0 as possible.
+
+10. Lottery
+    * Every process gets some number of "lottery tickets" for each resource. When a decision has to be made, a ticket is randomly selected, and the process holding that ticket gets the resource.
+    * This system provides some clarity over others. If a process has a fraction $f$ of the total tickets, we can expect it to get $f\%$ of the resource(s).
