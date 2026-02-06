@@ -139,7 +139,7 @@ We need an abstraction; a layer of indirection.
 
 We do this with a concept called **address space**.
 
-An address space is a set of processes that a process can use. Each process has its own independent address space.
+An address space is a set of addresses that a process can use. Each process has its own independent address space.
 
 An analogy for address spaces can be found in phone numbers.
 
