@@ -18,23 +18,23 @@ We now turn our attention to fulfilling memory allocation requests.
 
 The operating system will try to find some free memory to meet a request.
 
-Although running out of memory in modern computers is a rare occurence, there is the possibility that some request may not be fulfilled because no block meeting the need of the request is available.
+Although running out of memory in modern computers is a rare occurrence, there is the possibility that some request may not be fulfilled because no block meeting the need of the request is available.
 
 ## Fixed Block Sizes
 
-One possibility for how to allocate memory is fixed block sies; allocating all block of memory as the same size.
+One possibility for how to allocate memory is fixed block sizes; allocating all blocks of memory as the same size.
 
-This doesn't mean requests aren't of varying size, just that all block allocated are the same size.
+This doesn't mean requests aren't of varying size, just that all blocks allocated are the same size.
 
 With this method, of course, some memory is wasted. Consider that if 1.5 blocks are requested, 2 blocks are returned. The extra 0.5 blocks can't be used for anything useful (it will show as allocated). This is *internal fragmentation*.
 
 ### One Block Size
 
-If a system has only one block size, we can divide up the memory and maintain a linked list of available block addresses. When a block. is allocated or freed, it is removed or added to the linked list accordingly.
+If a system has only one block size, we can divide up the memory and maintain a linked list of available block addresses. When a block is allocated or freed, it is removed or added to the linked list accordingly.
 
 ### Fixed Block Sizes, Multiple Size Options
 
-To accomodate diferent sizes of memory allocations, we can have different block sizes. Unfortunately, this still suffers from internal fragmentation.
+To accommodate different sizes of memory allocations, we can have different block sizes. Unfortunately, this still suffers from internal fragmentation.
 
 ## Variable Block Sizes
 
@@ -60,7 +60,7 @@ To solve this, we need a way to recombine split blocks.
 
 ### Coalescence
 
-This is the process of merging adjacent free blocks into larger blocks. This also makes it a good idea to mantain memory blocks in an doubly-linked list.
+This is the process of merging adjacent free blocks into larger blocks. This also makes it a good idea to maintain memory blocks in a doubly-linked list.
 
 Even with coalescence, $N$ free bytes may exist in the system but are spread out over many pieces, so an $N$ byte request cannot be satisfied.
 
@@ -83,13 +83,13 @@ The final way to prevent or deal with external fragmentation is different alloca
     * Instead of starting at the beginning of memory, keep track of where the last block was allocated, and begin searching from there for the next search.
     * This prevents external fragmentation at the beginning of memory.
 3. **Best fit**
-    * Instead of splitting up the first block equal to or larger than $N$, we choose the smallest block of all blocks that is at least as big as $N$. This way, we have the smallest remaining unaallocated space.
+    * Instead of splitting up the first block equal to or larger than $N$, we choose the smallest block of all blocks that is at least as big as $N$. This way, we have the smallest remaining unallocated space.
     * This requires either checking every available block or keeping them sorted in increasing size.
 4. **Worst fit**
     * With best fit, the leftover bits of memory are likely too small to be useful.
     * Instead, choose the largest block of free memory, so that the remaining split block is likely large enough to be useful.
 5. **Quick fit**
-    * Not a solution, but an optimizaiton.
+    * Not a solution, but an optimization.
     * If memory requests of a certain size are known to be common, it could be ideal to keep a separate list of blocks that are within a suitable range of that size (ie: 1-1.1 MB for 1 MB requests) to satisfy those quickly.
 
 Generally, first fit performs the fastest and best.

@@ -27,7 +27,7 @@ Short-term schedulers, also called dispatchers, are invoked frequently by the OS
 
 With co-operative multitasking, short-term schedulers only takes place if the currently executing thread yields or terminates.
 
-Co-operative multitasking is a bit problematic because of this, so we will discuss pre-emptive multitasking, where the OS is responsible for deciding when to switch threads, not the running thread (exception: thread voluntarily terinates).
+Co-operative multitasking is a bit problematic because of this, so we will discuss pre-emptive multitasking, where the OS is responsible for deciding when to switch threads, not the running thread (exception: thread voluntarily terminates).
 
 There are certain times to make a scheduling decision. The dispatcher will run when a thread becomes blocked. It will also run after handling an interrupt (the original thread is suspended so why not leave it in that state?).
 
@@ -35,7 +35,7 @@ There is also time slicing. If time slices are defined as $t$ units, and a threa
 
 ## Scheduling Criteria
 
-In order to evaluate scheduling alforithms, we require some criteria:
+In order to evaluate scheduling algorithms, we require some criteria:
 
 1. Turnaround Time: amount of time between a thread starting and finishing (execution time + time waiting for resources).
 2. Response Time: time between putting in a request and getting some answer back.
@@ -44,7 +44,7 @@ In order to evaluate scheduling alforithms, we require some criteria:
 5. Throughput: the number of threads that complete in a given amount of time should be maximized.
 6. Processor Utilization: how much of the time the CPU is busy.
 7. Fairness: threads should get a basic level of fairness (no starvation).
-8. Priorities: processes and threads can be assigned prirorities, which a scheduler should respect within limits.
+8. **Priorities**: processes and threads can be assigned priorities, which a scheduler should respect within limits.
 9. Balancing Resources: CPU and I/O should be kept equally busy. The more information about what I/O a thread requires, the better.
 
 ## Scheduling Algorithm Goals

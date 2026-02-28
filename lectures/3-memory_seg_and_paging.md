@@ -90,7 +90,7 @@ Given that pages tables themselves can be so large, there are strategies for str
 
 Rather than have one large table, the table has multiple levels that can be broken up.
 
-Suppose we have a two level system. If the page number is $p$, the first $k$ bits indicate the outer page. The outer page contains some information about where the *inner* pages are. The remaining $p - k$ bits identify the inner page. After the inner page is identified, the displacement $d$ is then caldulated from the inner page.
+Suppose we have a two level system. If the page number is $p$, the first $k$ bits indicate the outer page. The outer page contains some information about where the *inner* pages are. The remaining $p - k$ bits identify the inner page. After the inner page is identified, the displacement $d$ is then calculated from the inner page.
 
 ### Hashed Page Tables
 

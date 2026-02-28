@@ -20,7 +20,7 @@ With virtual memory, each reference is as follows:
 2. If it is invalid, terminate the program. If it is valid, but the page referenced is not in memory, continue.
 3. Find a free frame, or make one.
 4. Request a disk read to bring in the new page.
-5. When the disk read is done, update the reords to show the new page in memory.
+5. When the disk read is done, update the records to show the new page in memory.
 6. Restart the instruction that referenced the page that needed to be brought into memory.
 
 ## Performance

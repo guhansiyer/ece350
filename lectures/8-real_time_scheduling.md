@@ -40,12 +40,12 @@ Any non-preemptive scheduling algorithms are not suitable in this case, because 
 
 1. **Fixed-Instance Tasks**: something that executes a fixed number of times and that is frequently used just once, for init or cleanup purposes.
 2. **Periodic Tasks**: a task that recurs at regular intervals (ie: check a sensor, keep a wifi connection alive).
-3. **Aperiodic Tasks**: tasks that respond to irregularly occuring events. These are very rarely hard real-time because it is difficult to make a guarantee we will finish one task before the next one occurs.
-4. **Sporadic Tasks**: aperiodic tasks that require meeting deadlines. We need a guarantee that there is a minimum time between occurences of the event in order to make such a promise.
+3. **Aperiodic Tasks**: tasks that respond to irregularly occurring events. These are very rarely hard real-time because it is difficult to make a guarantee we will finish one task before the next one occurs.
+4. **Sporadic Tasks**: aperiodic tasks that require meeting deadlines. We need a guarantee that there is a minimum time between occurrences of the event in order to make such a promise.
 
 ## It takes how long?
 
-We have talked about execution time like it is a known quantity, but we nede to know where these come from. When the goal is to ensure that hard deadline are met, we need to know how long tasks take assuming the worst-case scenario. We consider two ways to estmiate the worst-case execution time: source code analysis and empirical testing.
+We have talked about execution time like it is a known quantity, but we need to know where these come from. When the goal is to ensure that hard deadline are met, we need to know how long tasks take assuming the worst-case scenario. We consider two ways to estimate the worst-case execution time: source code analysis and empirical testing.
 
 We want to overestimate the expected execution time in either strategy. We may calculate needing much more capacity than actually needed, but it is not necessarily a bad thing to have more capacity than needed.
 
@@ -122,11 +122,11 @@ None of these are actually solutions that ensure optimal scheduling for multicor
 
 The *P* in P-Fair scheduling stands for proportional. The goal is to allocate CPU time in a way that tasks make progress as steady rates. An application can request time $x_i$ time units every $y_i$ time quanta (slices). The system guarantees that over any $T$ slices, a continuously-running application receives between $x_i / y_i \times T$ time and quanta of service.
 
-To restate, time is divided up into small pieces, and each process gets a proprotional share of the CPU time, which is never more than one time slice away from the amount of time it "should" receive.
+To restate, time is divided up into small pieces, and each process gets a proportional share of the CPU time, which is never more than one time slice away from the amount of time it "should" receive.
 
-The term "lag" is used to represent the difference bewteen the allocated time and the time a task should have. If lag is greater than zero, the task is behind on the CPU time it should have. If it is below zero, the task had more CPU time than it should have.
+The term "lag" is used to represent the difference between the allocated time and the time a task should have. If lag is greater than zero, the task is behind on the CPU time it should have. If it is below zero, the task had more CPU time than it should have.
 
-A task is considered *urgent* if its lag is greater than 0, and trivial(?) (tnegru) if its lag is negative.
+A task is considered *urgent* if its lag is greater than 0, and trivial if its lag is negative.
 
 The algorithm then consists of three parts:
 

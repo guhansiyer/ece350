@@ -16,7 +16,7 @@ Caches for memory are often multileveled, which changes the effective access tim
 
 ## Page Replacement Algorithms
 
-When a page fault occurs, the OS needs to choose which page to evict from the cache, in order to accomodate the new page, assuming the cache is full. There are a variety of algorithms that can dictate which page to remove.
+When a page fault occurs, the OS needs to choose which page to evict from the cache, in order to accommodate the new page, assuming the cache is full. There are a variety of algorithms that can dictate which page to remove.
 
 ### Optimal
 

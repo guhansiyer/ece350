@@ -45,7 +45,7 @@ A simple scheduling algorithm would be to always pick the highest priority, non-
 
     $$S_{n+1} = \alpha T_n + (1 - \alpha) S_n$$
 
-    * The older an observation, the less it is counted, and the largeer $\alpha$ we have, the more recent observations matter.
+    * The older an observation, the less it is counted, and the larger $\alpha$ we have, the more recent observations matter.
     * There is a chance that longer processes will starve if there is a steady stream of shorter processes.
 
 6. **Shortest Remaining Time**
@@ -56,8 +56,8 @@ A simple scheduling algorithm would be to always pick the highest priority, non-
     * One advantage is we no longer need time slicing. Instead of interrupting the process every $t$ units of time, the other interrupts (user programs launching, hardware operations, etc.) will be what prompts the scheduler, which is a net performance increase.
 
 7. **Highest Response Ratio Next**
-    * Introduce normalized turnaround time: the ratio fo the turnaround time to the service time.
-    * The goal of the HRRN stratey is to minimize the normalized turnaround time average across all processes.
+    * Introduce normalized turnaround time: the ratio of the turnaround time to the service time.
+    * The goal of the HRRN strategy is to minimize the normalized turnaround time average across all processes.
     * We calculate the response ration $R = \frac{w+s}{s}$, where $w$ is the waiting time and $s$ is the service time (a guess).
     * When we need to select a new process to run, we pick the process with the highest $R$-value.
     * Jobs with a small $s$ are likely to get scheduled quickly.
