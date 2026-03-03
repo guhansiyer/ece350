@@ -98,7 +98,7 @@ Generally, first fit performs the fastest and best.
 
 In a buddy system, blocks are of size $2^K$ where $L \leq K \leq U$, $2^L$ is the smallest block size and $2^U$ is the largest block size we can allocate.
 
-Initially memory is treated as a single block of size $2^U$. If a request of size $n$ occurs such that $2^{U-1} < n \leq 2^{U}$ then the whole block is allocated. Otherwise, the block is split into two "buddies" of size $2^{U-1}$. If $2^{U-2} < n \leq 2^{U-1}$, allocate one of the blocks of $2^{U-1}$ to the request. Otherwise, subdivide again. This repeats until the smallest block greater than or equal to $n$ is allocated. 
+Initially memory is treated as a single block of size $2^U$. If a request of size $n$ occurs such that $2^{U-1} < n \leq 2^{U}$ then the whole block is allocated. Otherwise, the block is split into two "buddies" of size $2^{U-1}$. If $2^{U-2} < n \leq 2^{U-1}$, allocate one of the blocks of $2^{U-1}$ to the request. Otherwise, subdivide again. This repeats until the smallest block greater than or equal to $n$ is allocated.
 
 In subsequent allocations, we can search the data structure to find either a block of appropriate size or a block that can be subdivided to meet the allocation.
 
