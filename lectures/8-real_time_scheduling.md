@@ -1,4 +1,4 @@
-# Real Time Scheduling
+# Real-Time Scheduling
 
 The term "task" refers to something that needs doing. The scheduler operates on threads rather than tasks, but we will say that a task corresponds to one thread.
 
@@ -39,7 +39,7 @@ Any non-preemptive scheduling algorithms are not suitable in this case, because 
 ## What kind of task is it?
 
 1. **Fixed-Instance Tasks**: something that executes a fixed number of times and that is frequently used just once, for init or cleanup purposes.
-2. **Periodic Tasks**: a task that recurs at regular intervals (ie: check a sensor, keep a wifi connection alive).
+2. **Periodic Tasks**: a task that recurs at regular intervals (i.e.: check a sensor, keep a wifi connection alive).
 3. **Aperiodic Tasks**: tasks that respond to irregularly occurring events. These are very rarely hard real-time because it is difficult to make a guarantee we will finish one task before the next one occurs.
 4. **Sporadic Tasks**: aperiodic tasks that require meeting deadlines. We need a guarantee that there is a minimum time between occurrences of the event in order to make such a promise.
 
@@ -154,7 +154,7 @@ We can then run the target algorithm and get some answers.
 
 Test cases that look more realistic will have everything be statically initialized at the start, and all tasks waiting. They will include tasks that arrive at the start, those that arrive after some time has passed, and periods where the idle task runs. They may also include other things, such as changing the priority of one or more threads, as this will have an impact on the processes execution order.
 
-Deterministic approaches are somewhat limited because the actual behaviour of most systems are very different from the model. Real systems have a lot of randomness that deterministic approaches often fail to recreate (ie: the time a user request comes in).
+Deterministic approaches are somewhat limited because the actual behaviour of most systems are very different from the model. Real systems have a lot of randomness that deterministic approaches often fail to recreate (i.e.: the time a user request comes in).
 
 ### Queueing Theory
 
@@ -177,94 +177,3 @@ When writing code for another platform, the platform may come with an emulator. 
 Simulations only tell us so much about the performance of an algorithm because it is always based on certain assumptions about the user and external factors.
 
 A general purpose operating system needs to work at an acceptable level for many different hardware configurations.
-
-## Commercial OS Scheduling Algorithms
-
-### Traditional Unix
-
-Traditional Unix scheduling is a multilevel feedback queue with round robin scheduling in each priority queue. Time slicing is implemented with a 1 second slice as default.
-
-Processor utilization for a process $j$ is calculated for an interval $i$ by keeping track of the amount of CPU time used:
-
-$CPU_{j}(i) = \frac{CPU_j(i-1)}{2}$
-
-The priority for a process $j$ at interval $i$ is given by:
-
-$P_j(i) = B_j + \frac{CPU_j}{2} + N_j$
-
-Where $B_j$ is the base priority of the process and $N_j$ is the **"nice"** value.
-
-The "nice" value is a user-space mechanism to allow the user to voluntarily reduce a processes priority and be "nice" to other users.
-
-The $CPU$ and $N$ components of the equation are restricted to prevent a process from migrating out of its assigned category. Processes are assigned a category which has an associated priority. In order from highest to lowest priority, the categories are:
-
-1. Swapper (move process to and from disk).
-2. Block I/O device control (eg: disk).
-3. File manipulation.
-4. Character I/O device control (eg: keyboard).
-5. User processes
-
-Unix puts its needs first when it comes to processes.
-
-#### SVR4
-
-In Unix SystemV Release 4.0, the scheduling system was overhauled to give "real-time" processes the highest priority, then kernel procesess, then user-mode preferences. The big differences are (1) 160 priority levels broken into three types and (2) preemption points.
-
-The original design of the Unix kernel was not well suited to preemption because it was not expected that the kernel's own execution could be preempted at any time. So, in the new release, preemption points were added where it would be fine for the kernel to stop execution and do another operation.
-
-#### BSD
-
-BSD is the Berkeley Software Distribution; a historic Unix-like operating system. FreeBSD is the most popular modern descendant of BSD.
-
-FreeBSD's scheduling is similar to SVR4, but with more priority levels (256 instead of 160) and categories (5 instead of 3). This better suites multiprocessor systems.
-
-What is also new is an interactivity scoring mechanism. Interactivity score identifies which threads are user-interactive and which are CPU-intensive. Threads that are user-interactive should get a higher priority to run (lower numbers are higher priorities). Interactivity is judged based on how often a thread gets blocked; threads waiting for the user or network for example would be considered interactive.
-
-We define the maximum interactivity score as $m$, the runtime of the thread as $r$, and the sleep time of the thread as $s$. For threads where $s > r$, the interactivity score is calculated as $\frac{m}{2} \cdot \frac{r}{s}$, in the opposite case: $\frac{m}{2} \cdot \left(1+ \frac{r}{s}\right)$
-
-This ensures that threads that sleep more than they run are always in the lower half, and threads that run more than they sleep the upper half of their priority bands.
-
-Interactivity is a bit more complex than whether or not threads get blocked, but the mechanism is intentionally crude to provide less reward for gaming the system.
-
-FreeBSD uses push and pull mechanisms for load balancing.
-
- The pull mechanism is relatively simple. When a CPU core has no work to do, it sets a bit in a bit mask to indicate that it is idle. If a new thread is added to a queue, the assignment mechanism checks for idle processors and sends it to them.
-
- The push migration is accompanied by the dispatcher twice per second, checking the highest and lowest load processors, and equalizing their run queues.
-
-### Windows
-
-Windows uses a priority-based, preemptive scheduling algorithm. The name of the selection routine is the *dispatcher*.
-
-A thread will run until it is preempted, blocks, or terminates until the times expires. If a higher priority thread is unblocked, it will preempt a lower priority thread.
-
-Windows has 32 different priority levels, regular (1-15) and real-time (16-31). Memory management tasks run at priority 0.
-
-The dispatcher maintains a queue for each priority and goes through them from highest to lowest until it finds something to do.
-
-There are six priority classes a process can be set to in Task Manager:
-
-1. Realtime
-2. High
-3. Above Normal
-4. Normal (default)
-5. Below Normal
-6. Low
-
-Each of these classes has relative priority levels (in realtime, Windows ):
-
-1. Time Critical
-2. Highest
-3. Above Normal
-4. Normal (default)
-5. Below Normal
-6. Lowest
-7. Idle
-
-If a process reaches the end of a time slice, the thread is interrupted. If it is not real-time, the priority is lowered, to a minimum of the base priority of each class.
-
-When a previously blocked process is unblocked, its priority is temporarily boosted (unless it is realtime). The boost amount depends on what the event was; a process waiting for a keyboard input gets a larger boost than one waiting for a disk operation.
-
-Windows also gives low priority processes a temporary boost to a priority of 15 to prevent starvation and mitigate the impact of a priority inversion scenario.
-
-Whatever process is running in the selected foreground window is given a priority boost and longer time slices. This is a key difference between the heritage of Unix and Windows; Unix was a time-sharing system with multiple users and lots of processes, Windows originally was a single-user desktop OS doing one or a few things at a time.

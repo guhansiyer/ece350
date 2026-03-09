@@ -48,13 +48,13 @@ Similar to fixed block sizes, linked lists can be used to allocate memory.
 
 At startup, the list contains one entry, since all available memory is in a contiguous block.
 
-When a request is allocated, the block is divided accordingly. Suppose we allocate a 128 byte request. A new entry gets added at 128 bytes in the list. The node contains the start address, block length, and an bit indicating that it is allocated.
+When a request is allocated, the block is divided accordingly. Suppose we allocate a 128 byte request. A new entry gets added at 128 bytes in the list. The node contains the start address, block length, and a bit indicating that it is allocated.
 
 The unallocated (remaining memory) node contains this updated entry: smaller size, new start address, bit indicating that it is unallocated.
 
 When the block is deallocated, we find it in the linked list and set the bit to zero to indicate it is available.
 
-After enough time allocating and deallocating memory, we may end up with the free blocks being small and spreadout. In this case, it may be that there is a contiguous block of free memory of size $N$ available, but the corresponding request can't be fulfilled because that memory is split up into smaller pieces.
+After enough time allocating and deallocating memory, we may end up with the free blocks being small and spread out. In this case, it may be that there is a contiguous block of free memory of size $N$ available, but the corresponding request can't be fulfilled because that memory is split up into smaller pieces.
 
 To solve this, we need a way to recombine split blocks.
 
@@ -90,7 +90,7 @@ The final way to prevent or deal with external fragmentation is different alloca
     * Instead, choose the largest block of free memory, so that the remaining split block is likely large enough to be useful.
 5. **Quick fit**
     * Not a solution, but an optimization.
-    * If memory requests of a certain size are known to be common, it could be ideal to keep a separate list of blocks that are within a suitable range of that size (ie: 1-1.1 MB for 1 MB requests) to satisfy those quickly.
+    * If memory requests of a certain size are known to be common, it could be ideal to keep a separate list of blocks that are within a suitable range of that size (i.e.: 1-1.1 MB for 1 MB requests) to satisfy those quickly.
 
 Generally, first fit performs the fastest and best.
 
@@ -102,4 +102,4 @@ Initially memory is treated as a single block of size $2^U$. If a request of siz
 
 In subsequent allocations, we can search the data structure to find either a block of appropriate size or a block that can be subdivided to meet the allocation.
 
-Whenver a pair of buddies are both free, they can be coalesced.
+Whenever a pair of buddies are both free, they can be coalesced.

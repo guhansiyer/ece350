@@ -41,7 +41,7 @@ $\text{Effective Access Time} = h \times t_c + (1 - h)(p \times t_m + (1 - p) \t
 
 If there are $n$ free frames in a simple system, we demand page them all. Initially, all frames are empty, and pages are read into them as needed. When all $n$ frames are filled, page $n+1$ must replace a page already in a frame. When a process terminates, all its frames are marked as free. We can build from this.
 
-We may reserve a few pages to be free at all times. When we want to move a page into a frame, if all frames are full, we select a victim and write it to disk if necessary. If we reserve free pages, then we can read the new page into the frame and write the old page at a convienient time.
+We may reserve a few pages to be free at all times. When we want to move a page into a frame, if all frames are full, we select a victim and write it to disk if necessary. If we reserve free pages, then we can read the new page into the frame and write the old page at a convenient time.
 
 If there are $m$ frames and the OS reserves $k$ of them, there are $m-k$ available frames for processes.
 
@@ -65,7 +65,7 @@ We need fewer programs in memory at a time.
 
 One solution is to force a local replacement policy rather than global replacement. If a process is thrashing, it cannot steal pages from another process. But if it is spending all its time paging to and from the disk, any other process that wants to use the disk will have to wait.
 
-It is best to be proactive and deal with managing processes before thashing occurs.
+It is best to be proactive and deal with managing processes before thrashing occurs.
 
 Memory accesses tend to obey locality, temporally (memory locations recently accessed are likely to be accessed soon) and spatially (memory locations close by are likely to be accessed when one is accessed).
 

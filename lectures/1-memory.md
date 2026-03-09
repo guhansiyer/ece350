@@ -9,7 +9,7 @@ Application developers behave as if:
 
 > Why do program developers behave as if main memory is unlimited and unshared?
 
-Compared to the early days of computing, available memory is huge. Early systems (ie: Commodore 64; 64 KB of memory) had very limited memory. In these times, developers had to think about and use memory very efficiently.
+Compared to the early days of computing, available memory is huge. Early systems (i.e.: Commodore 64; 64 KB of memory) had very limited memory. In these times, developers had to think about and use memory very efficiently.
 
 This is why languages like C and Java support types like `short`. In modern times, will anyone notice if we waste 1000 integers?
 
@@ -31,7 +31,7 @@ Another problem is that there is no protection for the OS. The OS is placed in e
 
 ### Base and Limit
 
-A solution to this problem is to add some additional information. The IBM 360 divided memory into 2 KB block and assigned each block a 4-bit key. The Program Status Word (PSW) also had a 4-bit key. If the hardware identified a discrepancy between the two, it would prevent the memory access.
+A solution to this problem is to add some additional information. The IBM 360 divided memory into 2 KB blocks and assigned each block a 4-bit key. The Program Status Word (PSW) also had a 4-bit key. If the hardware identified a discrepancy between the two, it would prevent the memory access.
 
 To generalize this, we maintain a *base* and *limit* address to define the start and end of a program's memory. Every access is compared to the base and base + limit addresses. If the access falls outside that range, it is in error. Because of how often this operation is executed, the comparison is done in hardware and the base and limit addresses are held in registers.
 
@@ -145,7 +145,7 @@ An analogy for address spaces can be found in phone numbers.
 
 Phone numbers have the form XXX-XXXX. Any number in the range 000-0000 to 999-9999 could be issued, save certain reserved numbers.
 
-There are likely more phones than available numbers if we left the numbers in this form, so we attach a three digit area code to the start of the number (ie: 226 in Southwestern Ontario, 416/647 in Toronto).
+There are likely more phones than available numbers if we left the numbers in this form, so we attach a three digit area code to the start of the number (i.e.: 226 in Southwestern Ontario, 416/647 in Toronto).
 
 The same idea can be applied to processes. Process 1 and process 2 could write to address `1024`, and these end up being different locations, such as `21024` and `51024`.
 

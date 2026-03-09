@@ -30,7 +30,7 @@ A picture frame may be empty or contain a picture. If the frame is empty, it is 
 
 ## Paging: Process Initialization
 
-A process starts, is loaded into memory and has inital memory requirements.
+A process starts, is loaded into memory and has initial memory requirements.
 
 The number of pages can and will change over time as memory is allocated and freed.
 
@@ -46,13 +46,13 @@ Since we have multiple segments per process and they are no longer continuous, a
 
 Each process needs a page table to keep track of which pages are located where in memory, as well as which frames are free.
 
-Page size size is usually a power of 2, making translations between logical addresses and tuples (page number and offset).
+Page size is usually a power of 2, making translations between logical addresses and tuples (page number and offset).
 
 If a logical address has size $2^m$ and page size $2^n$ bytes, the high order $m - n$ bits of the logical address are the page number, the lower $n$ bits are the page offset.
 
 External fragmentation is eliminated with this scheme, because all pages are the same size.
 
-Page size is ususally correlated with disk block size, so that swapped pages can be read/wrote with a single operation.
+Page size is usually correlated with disk block size, so that swapped pages can be read/written with a single operation.
 
 This all contributes to the answer to why application developers can treat memory as if it is infinitely large and unshared: because a program is scattered throughout physical memory but appears contiguous to running applications and the developer.
 
@@ -80,7 +80,7 @@ Any code can be shared as long as it is **reentrant**; unchanging when executed.
 
 A page table, at its core, is just a standard table. If a system is 32-bit and page sizes are 4 KB ($2^{12}$), then the page table has $2^{32} / 2^{12} = 2^{20}$ pages (~1 million entries).
 
-Given that pages tables themselves can be so large, there are strategies for structuring the page table. Three examples include:
+Given that page tables themselves can be so large, there are strategies for structuring the page table. Three examples include:
 
 1. Hierarchical paging
 2. Hashed page tables

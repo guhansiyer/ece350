@@ -6,7 +6,7 @@ Caches are useful anytime a large resource is divided into pieces, some of which
 
 Consider a CPU generating memory addresses for read/write operations.
 
-The address will be mapped to a page. If the page is in the cache, it is a *cache hit*. If it is not in th ecache, it is a *miss*, in which case the page must be loaded from memory. A page miss is also called a *page fault*. The percentage of time that a page is found in the cache is the *hit ratio*. The effective access time can be computed as:
+The address will be mapped to a page. If the page is in the cache, it is a *cache hit*. If it is not in the cache, it is a *miss*, in which case the page must be loaded from memory. A page miss is also called a *page fault*. The percentage of time that a page is found in the cache is the *hit ratio*. The effective access time can be computed as:
 
 $\text{Effective Access Time} = h \times t_c + (1 - h) \times t_m$
 
@@ -24,7 +24,7 @@ When a page fault occurs, the OS needs to choose which page to evict from the ca
 * For each page, make a determination about how many instructions in the future that page will be accessed. The one with the highest value is selected.
 * This is a **benchmark**, the algorithm itself is impossible to implement.
 
-### Not Recently Uesd
+### Not Recently Used
 
 * Computers may have two status bits $R$ and $M$ associated with each page. $R$ is set when a page is read/written to (referenced), $M$ is set when the page is strictly written to (modified). A bit can only be changed by the OS after being set.
 * Initially, $R = M = 0$. Periodically, $R$ is cleared to distinguish which pages have been recently referenced. When a replacement must happen, the OS sorts the pages into 4 buckets based on the bits, in the following order of precedence:
@@ -87,11 +87,11 @@ For the page replacement algorithms, it is important to consider whether it shou
 
 Suppose we use LRU. If a process has a page fault, do we replace the least recently used page in all caches (global), or just in the cache that belongs to the process (local)?
 
-In multilevel cache systems, we may have different strategies. If L1 is 16 KB and page are 4 KB, there can be 4 pages in the cache, so global replacement makes sense. If L2 is 256 KB, there are 64 pages, so local replacement could work.
+In multilevel cache systems, we may have different strategies. If L1 is 16 KB and pages are 4 KB, there can be 4 pages in the cache, so global replacement makes sense. If L2 is 256 KB, there are 64 pages, so local replacement could work.
 
 Local algorithms give each process a fixed number of pages in the cache. Global algorithms dynamically allocate cache space to processes.
 
-Suppose we have a large cache, and a global algorithm with some capability to give processes the "correct" number of pages in the cacche. To accomplish this, we may track the number of page faults in a measure called *PFF* (page fault frequency).
+Suppose we have a large cache, and a global algorithm with some capability to give processes the "correct" number of pages in the cache. To accomplish this, we may track the number of page faults in a measure called *PFF* (page fault frequency).
 
 If PFF is above some upper threshold, more cache space is needed for a process. If it is below a lower threshold, the process has too much cache space allocated.
 

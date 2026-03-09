@@ -20,8 +20,8 @@ A simple scheduling algorithm would be to always pick the highest priority, non-
     * Just like first come first served, Round Robin tends to favour CPU-bound processes. I/O-bound processes run for a short time, block on I/O, and when I/O finished, the process gets back in the ready queue.
     * Round Robin can be improved to Virtual Round Robin.
         * A process that gets unblocked after I/O gets higher priority.
-        * Instead of rejoining the general queue, there is an auxilary queue for processes that were previously blocked on I/O.
-        * When the scheduler chooses a process to run, it takes from the auxilary queue if possible.
+        * Instead of rejoining the general queue, there is an auxiliary queue for processes that were previously blocked on I/O.
+        * When the scheduler chooses a process to run, it takes from the auxiliary queue if possible.
         * If a process simply ran out of time, it goes into the normal ready queue.
 
 4. **Shortest Process Next**
@@ -50,7 +50,7 @@ A simple scheduling algorithm would be to always pick the highest priority, non-
 
 6. **Shortest Remaining Time**
     * This is a modification of the previous strategy.
-    * When a new process is scheduled or an old one is unblocked, the scheduler evalutes if there is a shorter predicted running time than the currently running process.
+    * When a new process is scheduled or an old one is unblocked, the scheduler evaluates if there is a shorter predicted running time than the currently running process.
         * If there is one, the available process will be ran, displacing the currently running process.
     * There is a chance, just like the last algorithm. If we choose $S_1$ to be 0 for a new process, they will always displace the current process.
     * One advantage is we no longer need time slicing. Instead of interrupting the process every $t$ units of time, the other interrupts (user programs launching, hardware operations, etc.) will be what prompts the scheduler, which is a net performance increase.
@@ -58,7 +58,7 @@ A simple scheduling algorithm would be to always pick the highest priority, non-
 7. **Highest Response Ratio Next**
     * Introduce normalized turnaround time: the ratio of the turnaround time to the service time.
     * The goal of the HRRN strategy is to minimize the normalized turnaround time average across all processes.
-    * We calculate the response ration $R = \frac{w+s}{s}$, where $w$ is the waiting time and $s$ is the service time (a guess).
+    * We calculate the response ratio $R = \frac{w+s}{s}$, where $w$ is the waiting time and $s$ is the service time (a guess).
     * When we need to select a new process to run, we pick the process with the highest $R$-value.
     * Jobs with a small $s$ are likely to get scheduled quickly.
     * HRRN introduces something we have not had yet: factoring in a process's age. $w$ indicates how long a process has spent waiting.
@@ -70,7 +70,7 @@ A simple scheduling algorithm would be to always pick the highest priority, non-
     * We have treated processes more or less equally (excluding priority) thus far.
     * While fair, it is not always ideal, especially for situations where processes behave differently (user/kernel programs).
     * We could apply different algorithms to different process types.
-    * The multilevel queue takes the ready queue and splits it into several queues. A process can only be in one of the queues base on some attribute of the process. One queue could be scheduled by round robin, and another by first come, first served, for example.
+    * The multilevel queue takes the ready queue and splits it into several queues. A process can only be in one of the queues based on some attribute of the process. One queue could be scheduled by round robin, and another by first come, first served, for example.
     * We also need a way of choosing which queue to take from. This depends on our goals. We might dictate that some queues have absolute priority over others, or we might have time slicing between the queues.
 
 9. **Guaranteed Scheduling**
@@ -128,7 +128,7 @@ If the OS is going to make an effort but not guarantee that a process runs on a 
 
 If it is guaranteed to run on one processor or a specified set of processors, it is called *hard affinity*.
 
-Another reason we may want to lock a process to a certain processor is when memory accesses are non-uniform. If the CPU can access some parts of memory faster than others, the system has non-uniform memory access (ie: processors have faster access to their own local memory than another processor's memory).
+* Another reason we may want to lock a process to a certain processor is when memory accesses are non-uniform. If the CPU can access some parts of memory faster than others, the system has non-uniform memory access (i.e.: processors have faster access to their own local memory than another processor's memory).
 
 ## Load Balancing
 
