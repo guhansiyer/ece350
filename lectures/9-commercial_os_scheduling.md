@@ -1,6 +1,6 @@
-## Commercial OS Scheduling Algorithms
+# Commercial OS Scheduling Algorithms
 
-### Traditional Unix
+## Traditional Unix
 
 Traditional Unix scheduling is a multilevel feedback queue with round robin scheduling in each priority queue. Time slicing is implemented with a 1 second slice as default.
 
@@ -26,13 +26,13 @@ The $CPU$ and $N$ components of the equation are restricted to prevent a process
 
 Unix puts its needs first when it comes to processes.
 
-#### SVR4
+### SVR4
 
 In Unix SystemV Release 4.0, the scheduling system was overhauled to give "real-time" processes the highest priority, then kernel processes, then user-mode preferences. The big differences are (1) 160 priority levels broken into three types and (2) preemption points.
 
 The original design of the Unix kernel was not well suited to preemption because it was not expected that the kernel's own execution could be preempted at any time. So, in the new release, preemption points were added where it would be fine for the kernel to stop execution and do another operation.
 
-#### BSD
+### BSD
 
 BSD is the Berkeley Software Distribution; a historic Unix-like operating system. FreeBSD is the most popular modern descendant of BSD.
 
@@ -52,7 +52,7 @@ FreeBSD uses push and pull mechanisms for load balancing.
 
  The push migration is accompanied by the dispatcher twice per second, checking the highest and lowest load processors, and equalizing their run queues.
 
-### Windows
+## Windows
 
 Windows uses a priority-based, preemptive scheduling algorithm. The name of the selection routine is the *dispatcher*.
 
@@ -89,13 +89,14 @@ Windows also gives low priority processes a temporary boost to a priority of 15 
 
 Whatever process is running in the selected foreground window is given a priority boost and longer time slices. This is a key difference between the heritage of Unix and Windows; Unix was a time-sharing system with multiple users and lots of processes, Windows originally was a single-user desktop OS doing one or a few things at a time.
 
-### Linux
+## Linux
 
 Linux has two scheduling modes: Real-Time and Non-Real-Time. If the real-time scheduler is used, the system can still have non-real-time threads that are scheduled according to the normal scheduler routine.
 
-#### Linux Real-Time Scheduler
+### Linux Real-Time Scheduler
 
 Linux's scheduler has scheduling classes for priorities to be assigned to:
+
 * `SCHED_FIFO`: First-In, First-Out Real-Time threads
 * `SCHED_RR`: Round-Robin Real-Time threads
 * `SCHED_OTHER`: Non-Real-Time threads
@@ -115,7 +116,7 @@ These rules also apply to Round-Robin, but with time slicing implementing.
 
 Threads in the `SCHED_OTHER` category will only execute if no threads in the other queues are ready.
 
-#### Linux Non-Real-Time Schedulers
+### Linux Non-Real-Time Schedulers
 
 In earlier versions of Linux (2.4 >), the kernel used the traditional algorithm. A newer algorithm was then made called the $O(1)$ scheduler. In contrast the old scheduler ran in $O(n)$. Since version 2.6.23 of the kernel, a new algorithm has been used called the *Completely Fair Scheduler* (CFS).
 
