@@ -21,7 +21,7 @@ There are three ways we can communicate with hardware devices:
 
 Ideally when a general-purpose OS is written, it will accept new devices being added to it without needing to modify or recompile the code. We want to abstract away the hardware details to a certain extent, and provide a *uniform interface* to interact with.
 
-In early OS development, the hardware the computer shipped with what all the hardware it ever supported. If new modules were released, the vendor would update the OS to support the new device.
+In early OS development, the hardware the computer shipped with was often all the hardware it ever supported. If new modules were released, the vendor would update the OS to support the new device.
 
 OS developers realized that they could shift the work to hardware developers through *device drivers*; the driver plugs into the OS through a standard interface and mediates between the OS and device. This, however, fell apart because hardware developers didn't make great drivers.
 
