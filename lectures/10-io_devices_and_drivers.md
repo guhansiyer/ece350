@@ -133,41 +133,7 @@ However, in certain circumstances, we might want to allow direct access. For exa
 
 With regard to commands like `read`, we said it was the job of the device driver to translate this command into a hardware operation. 
 
-The diagram below shows the life cycle of an I/O request.
-
-```mermaid
-flowchart TB
-
-%% User process
-REQ["request I/O"]
-DONE["I/O completed, input data available, or output completed"]
-
-%% Kernel I/O subsystem (left)
-CHECK{"can already satisfy request?"}
-SEND["send request to device driver, block process if appropriate"]
-
-%% Device driver
-DRIVER["process request, issue commands to controller, configure controller to block until interrupted"]
-
-%% Device controller
-MONITOR["monitor device, interrupt when I/O completed"]
-
-%% Interrupt path
-COMPLETE["I/O completed, generate interrupt"]
-INT_HANDLER["receive interrupt, store data in device-driver buffer if input, signal to unblock device driver"]
-DETERMINE["determine which I/O completed, indicate state change to I/O subsystem"]
-
-%% Kernel return
-TRANSFER["transfer data (if appropriate) to process, return completion or error code"]
-
-%% Left path (request handling)
-REQ -->|"system call"| CHECK
-CHECK -->|yes| TRANSFER
-CHECK -->|no| SEND
-SEND
-```
-
-Generally the life cycle follows ten steps from start to finish:
+Generally the life cycle of an I/O request follows ten steps from start to finish:
 
 1. A process issues a system call.
 2. The system call routine checks the parameters for correctness. If the data is in a cache or buffer, return it right away.
