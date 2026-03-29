@@ -21,7 +21,7 @@ There are three ways we can communicate with hardware devices:
 
 Ideally when a general-purpose OS is written, it will accept new devices being added to it without needing to modify or recompile the code. We want to abstract away the hardware details to a certain extent, and provide a *uniform interface* to interact with.
 
-In early OS development, the hardware the computer shipped with what all the hardware it ever supported. If new modules were released, the vendor would update the OS to support the new device.
+In early OS development, the hardware the computer shipped with was often all the hardware it ever supported. If new modules were released, the vendor would update the OS to support the new device.
 
 OS developers realized that they could shift the work to hardware developers through *device drivers*; the driver plugs into the OS through a standard interface and mediates between the OS and device. This, however, fell apart because hardware developers didn't make great drivers.
 
@@ -133,41 +133,7 @@ However, in certain circumstances, we might want to allow direct access. For exa
 
 With regard to commands like `read`, we said it was the job of the device driver to translate this command into a hardware operation. 
 
-The diagram below shows the life cycle of an I/O request.
-
-```mermaid
-flowchart TB
-
-%% User process
-REQ["request I/O"]
-DONE["I/O completed, input data available, or output completed"]
-
-%% Kernel I/O subsystem (left)
-CHECK{"can already satisfy request?"}
-SEND["send request to device driver, block process if appropriate"]
-
-%% Device driver
-DRIVER["process request, issue commands to controller, configure controller to block until interrupted"]
-
-%% Device controller
-MONITOR["monitor device, interrupt when I/O completed"]
-
-%% Interrupt path
-COMPLETE["I/O completed, generate interrupt"]
-INT_HANDLER["receive interrupt, store data in device-driver buffer if input, signal to unblock device driver"]
-DETERMINE["determine which I/O completed, indicate state change to I/O subsystem"]
-
-%% Kernel return
-TRANSFER["transfer data (if appropriate) to process, return completion or error code"]
-
-%% Left path (request handling)
-REQ -->|"system call"| CHECK
-CHECK -->|yes| TRANSFER
-CHECK -->|no| SEND
-SEND
-```
-
-Generally the life cycle follows ten steps from start to finish:
+Generally the life cycle of an I/O request follows ten steps from start to finish:
 
 1. A process issues a system call.
 2. The system call routine checks the parameters for correctness. If the data is in a cache or buffer, return it right away.
@@ -216,6 +182,6 @@ Device drivers offer an easy route for attackers to be able to get access they a
 
 In principle, bad drivers shouldn't be installed because of driver signing like what Windows has. Trying to install a non-signed driver will usually result in the OS throwing a lot of warnings.
 
-What happens if there is a vulnerability in an otherwise legitimate driver? This driver would've been fully validated and approved, where the problem is only discovered after the driver is released. If a fix is published, then anyone installing the new version is fine, but nothing prevents installing the old version. For this we need some kind of revocation; a previously-approved driver should be able to be un-approved so that the OS won't allow the vulnerable version to be used. 
+What happens if there is a vulnerability in an otherwise legitimate driver? This driver would've been fully validated and approved, where the problem is only discovered after the driver is released. If a fix is published, then anyone installing the new version is fine, but nothing prevents someone from installing the old version. For this we need some kind of revocation; a previously-approved driver should be able to be un-approved so that the OS won't allow the vulnerable version to be used. 
 
 In 2022, Microsoft had failed to properly apply updates to the driver block list which resulted in vulnerable drivers being installed. Microsoft did address this once reported, but late enough that there were cases of exploits taking place with these drivers. The installation rate for patches to any OS is never 100% as well, so vulnerable systems will continue to exist due to this oversight.

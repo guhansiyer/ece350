@@ -32,17 +32,17 @@ When a process needs to read/write to/from the disk, the system call contains th
 
 Random scheduling acts as a baseline to compare various algorithms. We can assess the options based on their improvements relative to random scheduling.
 
-1. First-Come, First-Served
-2. Shortest Seek Time First
+1. **First-Come, First-Served**
+2. **Shortest Seek Time First**
    * Instead of picking the next item in the queue, pick the request with the least seek time from the current head position.
    * Subject to starvation in many circumstances (i.e.: many low-number requests starving high-number requests).
-3. SCAN Scheduling
+3. **SCAN Scheduling**
    * Move in one direction until we reach the "end" of the disk, then reverse directions.
-4. C (Circular)-SCAN Scheduling
+4. **C (Circular)-SCAN Scheduling**
    * Exploits the fact that when the disk reaches one end, most requests are likely at the other end.
    * Instead of reversing directions and servicing requests on the way back, jump to the other end of disk and start from there.
    * If it takes $t$ to scan from the start to end of disk, the expected service interval for sectors at the edges is $2t$ with SCAN. With C-SCAN, the interval is reduced approximately to $t + s_{max}$, where $s_{max}$ is the maximum seek time.
-5. LOOK Scheduling
+5. **LOOK Scheduling**
    * Optimization on SCAN and C-SCAN.
    * Instead of going to the end of the disk each time, go to the final request and only then reverse direction or go back to the start.
    * Has circular variant C-LOOK.
