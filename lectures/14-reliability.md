@@ -56,7 +56,7 @@ Like RAID 2, all reads and writes are synchronous across all disks, but unlike R
 
 ### RAID 4
 
-Block Parity. Block-level striping like RAID 9 with parity blocks on a dedicated parity disk. Unlike RAID 2 or 3, reads and writes need not be synchronous because we are working with whole blocks.
+Block Parity. Block-level striping like RAID 0 with parity blocks on a dedicated parity disk. Unlike RAID 2 or 3, reads and writes need not be synchronous because we are working with whole blocks.
 
 ### RAID 5
 
@@ -67,7 +67,6 @@ RAID 5 is considered the most common parity RAID system.
 ### RAID 6
 
 RAID 5 with extra information to survive disk failures.
-
 
 ## Combining RAID Levels
 
