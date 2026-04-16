@@ -44,7 +44,7 @@ If we have two disks, our usable capacity is half the purchased capacity, becaus
 
 ### RAID 2
 
-Bit Parity; essentially data striping at the bit-level. If the first bit of each byte is stored on disk 1, second bit on disk 2, and so on up to bit 8, and an additional disk stores parity bits, then in the event that one disk is lost, the parity bit informs the lost bit value. Recall that with more parity bits, we have greater ability to detect and possibly correct errors (meaning more drives).
+Bit Parity; essentially data striping at the bit-level. If the first bit of each byte is stored on disk 1, second bit on disk 2, and so on up to bit 8, and additional disks stores parity bits (a disk is required for every parity bit according to the Hamming code). In the event that one disk is lost, the parity bit informs the lost bit value. Recall that with more parity bits, we have greater ability to detect and possibly correct errors (meaning more drives).
 
 A read or write will engage all disks in the array allowing for quick reads and writes, but it is painful to split up reads and writes to the bit level.
 
