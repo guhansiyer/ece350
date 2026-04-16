@@ -126,12 +126,12 @@ To restate, time is divided up into small pieces, and each process gets a propor
 
 The term "lag" is used to represent the difference between the allocated time and the time a task should have. If lag is greater than zero, the task is behind on the CPU time it should have. If it is below zero, the task had more CPU time than it should have.
 
-A task is considered *urgent* if its lag is greater than 0, and trivial if its lag is negative.
+A task is considered *urgent* if its lag is greater than 0, and *tnegru* if its lag is negative.
 
 The algorithm then consists of three parts:
 
 1. Schedule all urgent tasks.
-2. Do not schedule trivial tasks.
+2. Do not schedule tnegru tasks.
 3. Schedule other tasks in order of highest to lowest lag until capacity is filled.
 
 The goal is to keep the lag between -1 and +1 for all tasks.
